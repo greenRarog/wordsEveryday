@@ -1,6 +1,20 @@
 <x-layoutUser>
 
    <div class='main'>
+       @if(isset($message))
+       <div class='message'>{{ $message }}</div>
+       @endif
+       
+       @if(isset($pastWords))       
+        <div class='wrong_words'>
+            <select>
+        @foreach($pastWords as $word)
+         <option>{{ $word['name'] }}</option>
+        @endforeach
+            </select>
+        </div>
+       @endif
+       
        <h1>add new words to site</h1>
        <form method="POST" action="/room">
         @csrf           

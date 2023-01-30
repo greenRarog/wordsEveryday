@@ -56,15 +56,34 @@ class UserController extends Controller
         if($request->has('insert') and ($request->insert == 'true')){
             for ($i = 1; $i <= $quantityWords; $i++) {
                 $wordName = 'word_' . $i;
-                if($this->checkNew($request->$wordName['name'])){
-                    $test = $this->addNewWord($request->$wordName);
-                } else {
-                    $pastWords[] = $request->$wordName;                    
+                if($request->$wordName['name'] != null and 
+                   $request->$wordName['transcription'] != null and 
+                   $request->$wordName['meaning'] != null) {                    
+                    if($this->checkNew($request->$wordName['name'])){
+                        $test = $this->addNewWord($request->$wordName);
+                    } else {
+                        $pastWords[] = $request->$wordName;                    
+                    }
                 }
-            }            
-            return view('/user.room', [
-                'quantityWords' => $quantityWords,                
-            ]);
+            }
+            if (count($pastWords) < 1) {
+                $message = 'all words was add';
+                return view('/user.room', [
+                    'quantityWords' => $quantityWords,                
+                    'message' => $message,
+                ]);                
+            } else {
+                $message = 'some words are already in base';
+                //dd($pastWords);
+                return view('/user.room', [
+                    'quantityWords' => $quantityWords,                
+                    'pastWords' => $pastWords,
+                    'message' => $message,
+                ]);
+                
+                
+            }
+            
         } else {
                 return view('user.room', [
                     'quantityWords' => $quantityWords,
