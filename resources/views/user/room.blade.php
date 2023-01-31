@@ -44,7 +44,7 @@
            <input type="submit" class="button" value="add words">
        </form>
    </div>   
-    
+    <div>you have {{ $completedDays }} completed days</div>
 <script src='addRow.js'></script>    
     
 </x-layoutUser>

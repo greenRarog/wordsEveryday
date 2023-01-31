@@ -47,7 +47,7 @@ class UserController extends Controller
     }
     
 
-    public function room(Request $request){
+    public function room(Request $request){                
       if(!$request->session()->exists('auth')){
         $request->session()->put('auth', 'false');  
       } else if($request->session()->get('auth')){
@@ -71,6 +71,7 @@ class UserController extends Controller
                 return view('/user.room', [
                     'quantityWords' => $quantityWords,                
                     'message' => $message,
+                    'days' => $this->completedDays(),
                 ]);                
             } else {
                 $message = 'some words are already in base';
@@ -79,6 +80,7 @@ class UserController extends Controller
                     'quantityWords' => $quantityWords,                
                     'pastWords' => $pastWords,
                     'message' => $message,
+                    'days' => $this->completedDays(),                    
                 ]);
                 
                 
@@ -87,6 +89,7 @@ class UserController extends Controller
         } else {
                 return view('user.room', [
                     'quantityWords' => $quantityWords,
+                    'completedDays' => $this->completedDays(),                    
                 ]);                    
         }
       } else {
@@ -119,5 +122,9 @@ class UserController extends Controller
             return true;
         }
         
+    }
+    
+    private function completedDays(){
+        return floor(Word::where('used', 'no')->count()/10);       
     }
 }

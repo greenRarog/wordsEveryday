@@ -7,9 +7,13 @@
 	<body>
 		<div class="wrapper">
 			<x-header.header />
-			<main>
+                        <div class='wrapper_middle'>
+                          <x-middle.left_sidebar />
+			  <main>
 				{{ $slot }}
-			</main>
+			  </main>
+                          <x-middle.rigth_sidebar />  
+                        </div>
 			<x-footer.footer />
                 </div>
 	</body>

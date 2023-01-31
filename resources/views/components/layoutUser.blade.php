@@ -7,10 +7,13 @@
 	<body>
 		<div class="wrapper">
                         <x-header.headerUser />
-			<main>
+                        <div class='wrapper_middle'>
+                          <x-middle.l_sidebar />
+			  <main>
 				{{ $slot }}
-			</main>
+			  </main>
+                          <x-middle.r_sidebar />  
+                        </div>
 			<x-footer.footer />
-                </div>
 	</body>
 </html>
