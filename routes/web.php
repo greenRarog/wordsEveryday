@@ -21,3 +21,4 @@ Route::match(['get', 'post'], '/', [WordController::class, 'todayWords']);
 Route::match(['get', 'post'], '/login', [UserController::class, 'login']);
 Route::match(['get', 'post'], '/exit', [UserController::class, 'exit']);
 Route::match(['get', 'post'], '/room', [UserController::class, 'room']);
+Route::match(['get', 'post'], '/file_words', [UserController::class, 'file']);

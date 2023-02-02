@@ -8,11 +8,11 @@
 		<div class="wrapper">
 			<x-header.header />
                         <div class='wrapper_middle'>
-                          <x-middle.left_sidebar />
+                          <x-middle.l_sidebar />
 			  <main>
 				{{ $slot }}
 			  </main>
-                          <x-middle.rigth_sidebar />  
+                          <x-middle.r_sidebar />  
                         </div>
 			<x-footer.footer />
                 </div>

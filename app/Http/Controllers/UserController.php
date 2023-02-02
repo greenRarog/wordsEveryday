@@ -6,6 +6,7 @@ use App\Models\Word;
 use App\Models\Meaning;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 
 class UserController extends Controller
@@ -96,6 +97,48 @@ class UserController extends Controller
           return redirect ('/login');
       }
 }
+
+    public function file(Request $request){
+      if(!$request->session()->exists('auth')){
+        $request->session()->put('auth', 'false');  
+      }
+      if ($request->session()->get('auth')){
+        $pastWords = [];
+          if ($request->has('userfile')){
+              $path = Storage::putFile('temp', $request->userfile);
+              $content = Storage::get($path);
+              $arrayWords = explode('.', (string)$content);
+              $counter = 0;
+              foreach ($arrayWords as $wordChunks){
+                if($wordChunks != '') {
+                  $word_array = explode('-', $wordChunks);
+                  if ($this->checkNew($word_array[0])) {
+                    $array_for_function['name'] = $word_array[0];
+                    $array_for_function['transcription'] = $word_array[1];                  
+                    $array_for_function['meaning'] = $word_array[2];
+                    $this->addNewWord($array_for_function);
+                  } else {
+                      $pastWords[] = $word_array[0];
+                  }
+              }
+              }
+              Storage::delete($path);                                          
+              return view ('user.file', [
+                  'pastWords' => $pastWords,
+              ]);
+          } else {
+            return view('user.file', [
+                'pastWords' => $pastWords,
+            ]);              
+          }
+          
+          
+
+      } else {
+          return redirect ('/');
+      }  
+    }
+
 
 
     private function addNewWord($array){
